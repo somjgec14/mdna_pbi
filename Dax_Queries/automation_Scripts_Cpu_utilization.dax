@@ -6,8 +6,9 @@ DEFINE
         SUMMARIZECOLUMNS(
             'TimePoints'[TimePoint],
             'Dates'[Date],
-            "xInteractive__", [Interactive billable CU %],
-            "xBackground__", [Background billable CU %]
+            "Interactive_CU_Percentage", [Interactive billable CU %],
+            "Background_CU_Percentage", [Background billable CU %],
+            "Cumulative_CU_Percentage",[Cumulative CU usage % preview]
         )
 EVALUATE
     __DS0Core
