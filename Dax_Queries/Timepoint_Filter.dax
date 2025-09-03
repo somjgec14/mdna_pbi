@@ -1,0 +1,71 @@
+DEFINE
+    MPARAMETER 'CapacityID' = 
+        "40EF7A5E-1383-4947-A015-D6C46AFB919B"
+    MPARAMETER 'TimePoint' = 
+        (DATE(2025, 8, 27) + TIME(19, 23, 0))   
+    Var Date_time = (DATE(2025, 8, 27) + TIME(19, 23, 0))
+    Var CapacityID = "40EF7A5E-1383-4947-A015-D6C46AFB919B"
+    VAR __DS0FilterTable = 
+        FILTER(
+            KEEPFILTERS(VALUES('Timepoint Item List'[Artifact name])),
+            'Timepoint Item List'[Artifact name] <> "Usage Metrics Report"
+        )
+    VAR __DS0FilterTable2 = 
+        TREATAS({CapacityID}, 'Capacities'[capacity Id])
+
+    VAR __DS0FilterTable3 = 
+        TREATAS(
+            {Date_time},
+            'Timepoints'[Timepoint]
+        )
+    VAR __DS0Core = 
+        SUMMARIZECOLUMNS(
+        	'Items'[Workspace name],
+            'Items'[Item name],
+            'Items'[Item kind],
+            'Timepoints'[Timepoint],
+            'Timepoint Interactive Detail'[User],
+            'Timepoint Interactive Detail'[Operation],
+            'Timepoint Interactive Detail'[Operation start time],
+            'Timepoint Interactive Detail'[Operation end time],
+            'Timepoint Interactive Detail'[Status],
+            __DS0FilterTable,
+            __DS0FilterTable2,
+            __DS0FilterTable3,
+            "Percent_of_Capacity_Used", CALCULATE(SUM('Timepoint Interactive Detail'[% of base capacity])),
+            "Duration_in_Seconds", CALCULATE(SUM('Timepoint Interactive Detail'[Duration (s)])),
+            "CU_Consumed_in_Seconds", CALCULATE(SUM('Timepoint Interactive Detail'[Total CU (s)])),
+            "Overload_in_Seconds", CALCULATE(SUM('Timepoint Interactive Detail'[Throttling (s)]))
+        )
+
+    VAR __DS0PrimaryWindowed = 
+        TOPN(
+            502,
+            __DS0Core,
+            [Percent_of_Capacity_Used],
+            0,
+            'Timepoints'[Timepoint],
+            1,
+            'Items'[Item name],
+            1,
+            'Timepoint Interactive Detail'[User],
+            1,
+            'Timepoint Interactive Detail'[Operation],
+            1,
+            'Items'[Item kind],
+            1,
+            'Items'[Workspace name],
+            1,
+            'Timepoint Interactive Detail'[Operation start time],
+            1,
+            'Timepoint Interactive Detail'[Operation end time],
+            1,
+            'Timepoint Interactive Detail'[Status],
+            1
+        )
+
+EVALUATE
+    __DS0PrimaryWindowed
+
+ORDER BY
+    [Percent_of_Capacity_Used] DESC

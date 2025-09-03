@@ -1,0 +1,29 @@
+DEFINE
+    VAR day_1 = DAY(Today())
+    VAR month_1 = MONTH(Today())
+    VAR year_1= YEAR(Today())
+
+    var UPDATE_DAY = if(day_1=1, day(EOMONTH(TODAY(),-1)), day_1-1)
+    var UPDATE_MONTH = SWITCH(true,
+                              day_1 = 1&&month_1 > 1, month_1-1,
+                              day_1 = 1    &&month_1 = 1, 12,
+                              month_1)
+    var UPDATE_YEAR = SWITCH(true,
+                             month_1 > 1, year_1,
+                             month_1 = 1, year_1-1)
+
+
+    VAR __DS0FilterTable = 
+        FILTER(
+            KEEPFILTERS(VALUES('Dates'[Date])),
+            AND('Dates'[Date]>= DATE(UPDATE_YEAR, UPDATE_MONTH, UPDATE_DAY), 'Dates'[Date]< DATE(year_1, month_1, day_1))
+        )
+
+    VAR __DS0Core = 
+        SUMMARIZECOLUMNS(
+            'Dates'[Date],
+            __DS0FilterTable,
+            "Overload Minutes", [Dynamic M1 Throttling (min)]
+        )
+EVALUATE
+    __DS0Core

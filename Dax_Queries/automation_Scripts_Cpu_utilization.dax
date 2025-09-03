@@ -1,0 +1,16 @@
+DEFINE
+    MPARAMETER 'CapacityID' ="40EF7A5E-1383-4947-A015-D6C46AFB919B"
+    --11CE1374-106A-4A28-A165-8A164EEFCC18 - old - 40EF7A5E-1383-4947-A015-D6C46AFB919B - new--
+
+    VAR __DS0Core = 
+        SUMMARIZECOLUMNS(
+            'TimePoints'[TimePoint],
+            'Dates'[Date],
+            "xInteractive__", [Interactive billable CU %],
+            "xBackground__", [Background billable CU %]
+        )
+EVALUATE
+    __DS0Core
+
+ORDER BY
+    'TimePoints'[TimePoint]
