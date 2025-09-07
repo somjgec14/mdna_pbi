@@ -1,0 +1,30 @@
+DEFINE
+	MPARAMETER 'CapacitiesList' = 
+		{"40EF7A5E-1383-4947-A015-D6C46AFB919B"}
+
+	VAR __DS0FilterTable = 
+		FILTER(
+			KEEPFILTERS(VALUES('Capacities'[Capacity Id])),
+			AND(
+				'Capacities'[Capacity Id] IN {"40EF7A5E-1383-4947-A015-D6C46AFB919B"},
+				'Capacities'[Capacity Id] IN {"40EF7A5E-1383-4947-A015-D6C46AFB919B"}
+			)
+		)
+
+	VAR __DS0Core = 
+		SUMMARIZECOLUMNS(
+			'Timepoints'[Timepoint],
+			__DS0FilterTable,
+			"Background_billable_CU__", 'All Measures'[Background billable CU %],
+			"Interactive_billable_CU__", 'All Measures'[Interactive billable CU %],
+			"Cumulative_CU_usage___preview", IGNORE('All Measures'[Cumulative CU usage % preview])
+		)
+
+	VAR __DS0PrimaryWindowed = 
+		TOPN(1001, __DS0Core, 'Timepoints'[Timepoint], 0)
+
+EVALUATE
+	__DS0PrimaryWindowed
+
+ORDER BY
+	'Timepoints'[Timepoint] DESC
