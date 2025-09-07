@@ -1,17 +1,17 @@
 DEFINE
-    MPARAMETER 'CapacityID' ="40EF7A5E-1383-4947-A015-D6C46AFB919B"
+    --MPARAMETER 'CapacityID' ="40EF7A5E-1383-4947-A015-D6C46AFB919B"
     --11CE1374-106A-4A28-A165-8A164EEFCC18 - old - 40EF7A5E-1383-4947-A015-D6C46AFB919B - new--
-
+    MPARAMETER 'CapacitiesList' = 
+		{"40EF7A5E-1383-4947-A015-D6C46AFB919B"}
     VAR __DS0Core = 
         SUMMARIZECOLUMNS(
             'TimePoints'[TimePoint],
             'Dates'[Date],
-            "Interactive_CU_Percentage", [Interactive billable CU %],
-            "Background_CU_Percentage", [Background billable CU %],
-            "Cumulative_CU_Percentage",[Cumulative CU usage % preview]
+            "Interactive_CU_Percent", [Interactive billable CU %],
+            "Background_CU_Percent", [Background billable CU %],
+            "Cumulative_CU_Percent",[Cumulative CU usage % preview]
         )
 EVALUATE
     __DS0Core
-
 ORDER BY
     'TimePoints'[TimePoint]
