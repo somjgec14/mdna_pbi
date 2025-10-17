@@ -1,0 +1,23 @@
+In our project we have implemented CI/CD then to check how much we have improved we implemented DORA MEtrics:
+
+
+DORA Measures the following KPIs
+Failed deployment recovery time (FDRT):Time to recover from production failures.
+Lead Time for Changes (LTFC): Time from code commit to production deployment.
+Deployment Frequency (DF): How often we deploy code to production.
+Change failure rate (CFR): Percentage of deployments causing production failures.
+
+And the followign impact has happened directly 
+Our DF increased from twice in a week to whenever we want in working hours
+Our Lead Time for Changes (LTFC) has been from 1-2 working days of manual effort to automated which takes max 1 hour and is just a press of a button
+
+Indirect Effects:
+Improved Change Failure Rate (CFR):
+Before: High and unpredictable, due to manual errors.
+After: Significantly Reduced.
+Impact: Automated, standardized deployments eliminate human error, leading to more stable and reliable releases.
+Improved Failed Deployment Recovery Time (FDRT):
+Before: Hours or even days to identify, fix, and redeploy.
+After: Minutes.
+Impact: The automated pipeline allows us to quickly roll back to a previous stable version or roll forward with a fix, drastically minimizing downtime and customer impact.
+

@@ -1,0 +1,13 @@
+Scope
+
+1.	Check how we can transfer from Azure Synapse to DataBricks/Fabric (Measure: Transfer speed, storage space and effort)
+2. Connect Power BI to Databricks and Fabric (Measure: Which can connect more easily) (Direct Query and Import Mode)
+3. Adjust the Power BI Report (Measure: Effort to adjust)
+4. CI/CD Approach
+5. Data Governance
+6. Data Monitoring
+7. Operational Cost
+8. Resource Cost
+9. Development Cost
+10. Skill-set Cost and Development Effort
+11. Migration Time-Line

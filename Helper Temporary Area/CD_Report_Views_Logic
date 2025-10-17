@@ -1,0 +1,67 @@
+Create a new table called
+mard_mdna_T_Report_Views_Ratio
+
+
+
+Query 2: 
+SELECT 
+    [Date], 
+    [WorkspaceId], 
+    SUM([ReportViews]) AS Report_Views
+    --COUNT(DISTINCT [Userkey]) AS Unique_Users, 
+FROM 
+    [Click_Dashboard].[dbo].[mard_mdna_t_mdna_pbi_usage_metrics] -- Auto-Fix: Specified the correct table to select from
+GROUP BY 
+    [Date], 
+    [WorkspaceId] -- Auto-Fix: Ensured GROUP BY clause matches the SELECT statement
+ORDER BY 
+    Unique_Users DESC; -- Auto-Fix: Used the alias Unique_Users in the ORDER BY clause for clarity
+
+
+
+Query 1:
+SELECT
+[Access_Date],
+[PowerBIWorkspaceId],
+COUNT(Distinct [ExecutingUser]) as Unique_Users
+from [Click_Dashboard].[dbo].[mard_mdna_t_pbi_user_interaction_data]
+group by [Access_Date],[PowerBIWorkspaceId]
+order by Unique_Users DESC;
+
+Left Join Query 2 and Query 1 
+With Query 1 on left.
+Common column 
+[PowerBIWorkspaceId] and [Access_Date] from Query 1
+[Date] and [WorkspaceId] from Query 2
+ And column to be added to the left table is Report_Views from Query 2
+
+
+Now after this add another calculated column called Views_Users_Ratio = Report_Views/Unique_Users and in float format
+
+Using the above information I want to create a pyspark dataframe and save the data in a table using Microsoft Fabric Notebook
+
+Table Name: mard_mdna_t_pbi_views_users_ratio
+
+I need to create a measure in DAX
+I have a table called: mard_mdna_t_pbi_user_interaction_data
+Column Name: ExecutingUser
+
+Another Table: mard_mdna_T_HR_MINIMASTER_COUNTRY
+Column Name: Executing_User, COUNTRY_SHORT_TEXT
+
+There is a relationship 1:M relationship between these tables where 1 is to the mard_mdna_T_HR_MINIMASTER_COUNTRY table 
+Columns used for relationship is ExecutingUser, Executing_User
+
+I want to have a measure called Count_Countries which counts
+how many COUNTRY_SHORT_TEXT will be there with respect to mard_mdna_t_pbi_user_interaction_data
+
+
+
+Table Details
+
+Access Date
+Power BI workspace ID
+Report_Views
+Report
+
+I have a table called 

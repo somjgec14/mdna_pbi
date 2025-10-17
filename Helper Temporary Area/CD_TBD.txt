@@ -1,0 +1,35 @@
+Click Dashboard Logic
+
+Information: 
+Lakehouse Name: LH_Click_Dashboard
+Schema Name: mard_cd
+
+Table Name: T_HRAP_PT4_MINIDATASET_MBDX M --> 1 T_CUSN_RB9X_MD4R_166 --> M->1 T_CUSN_RB9X_MD4R_103T
+Columns: LOCATION_ABBREVIATION
+
+Table Name:T_CUSN_RB9X_MD4R_166
+Columns: LOCATION_CODE,COUNTRY_ID
+
+Table Name:T_CUSN_RB9X_MD4R_166T 
+Columns: LOCATION_CODE,DESCRIPTION,LANGUAGE_ID
+
+Table Name:T_CUSN_RB9X_MD4R_103T
+Columns: COUNTRY_ID,SHORT_TEXT,LONG_TEXT,LANGUAGE_ID
+
+
+I have the following tables I want to extract coulmns and combine them in a single table in Pyspark Notebook in Miscrosoft Fabric
+Target Table Name: T_Location_Country
+Logic to build this table
+Step 1: Extract all the distinct combinations of LOCATION_CODE and COUNTRY_ID from the table: T_CUSN_RB9X_MD4R_166 and name this table as T_Location_Country
+Step 2: Filter T_CUSN_RB9X_MD4R_166T table for the column LANGUAGE_ID = 'E', Extract all the distinct combinations of LOCATION_CODE and DESCRIPTION from the table: T_CUSN_RB9X_MD4R_166T and name this table as Intermediate_Table_1 
+Step 3: make sure LOCATION_CODE is the primary key. If duplicates present keep only the first rows and show the duplicated.
+Step 4: Merge the Description column from Intermediate_Table_2 into T_Location_Country using LOCATION_CODE. Logic should be left join with T_Location_Country as Left Table
+Step 5: Rename the description column as LOC_DESC
+Step 6: Filter T_CUSN_RB9X_MD4R_103T table for the column LANGUAGE_ID = 'E', Extract all the distinct combinations of COUNTRY_ID, SHORT_TEXT and LONG_TEXT from the table: T_CUSN_RB9X_MD4R_103T and name this table as Intermediate_Table_2
+Step 7: Ensure COUNTRY_ID is primary key. If duplicates present keep only the first rows and show the duplicated
+Step 8: Merge the SHORT_TEXT and LONG_TEXT column from Intermediate_Table_2 into T_Location_Country using COUNTRY_ID. Logic should be left join with T_Location_Country as Left Table
+Step 9: Rename SHORT_TEXT as COUNTRY_SHORT_TEXT and LONG_TEXT as COUNTRY_LONG_TEXT
+Step 10: A summary to be generated to show the count of 
+ total rows in T_Location_Country
+ Total distinct LOCATION_CODE 
+ Total Disctinct COUNTRY_ID
