@@ -1,0 +1,174 @@
+Create a new table called
+mard_mdna_T_Report_Views_Ratio
+
+
+
+Query 2: 
+SELECT 
+    [Date], 
+    [WorkspaceId], 
+    SUM([ReportViews]) AS Report_Views
+    --COUNT(DISTINCT [Userkey]) AS Unique_Users, 
+FROM 
+    [Click_Dashboard].[dbo].[mard_mdna_t_mdna_pbi_usage_metrics] -- Auto-Fix: Specified the correct table to select from
+GROUP BY 
+    [Date], 
+    [WorkspaceId] -- Auto-Fix: Ensured GROUP BY clause matches the SELECT statement
+ORDER BY 
+    Unique_Users DESC; -- Auto-Fix: Used the alias Unique_Users in the ORDER BY clause for clarity
+
+
+
+Query 1:
+SELECT
+[Access_Date],
+[PowerBIWorkspaceId],
+COUNT(Distinct [ExecutingUser]) as Unique_Users
+from [Click_Dashboard].[dbo].[mard_mdna_t_pbi_user_interaction_data]
+group by [Access_Date],[PowerBIWorkspaceId]
+order by Unique_Users DESC;
+
+Left Join Query 2 and Query 1 
+With Query 1 on left.
+Common column 
+[PowerBIWorkspaceId] and [Access_Date] from Query 1
+[Date] and [WorkspaceId] from Query 2
+ And column to be added to the left table is Report_Views from Query 2
+
+
+Now after this add another calculated column called Views_Users_Ratio = Report_Views/Unique_Users and in float format
+
+Using the above information I want to create a pyspark dataframe and save the data in a table using Microsoft Fabric Notebook
+
+Table Name: mard_mdna_t_pbi_views_users_ratio
+
+I need to create a measure in DAX
+I have a table called: mard_mdna_t_pbi_user_interaction_data
+Column Name: ExecutingUser
+
+Another Table: mard_mdna_T_HR_MINIMASTER_COUNTRY
+Column Name: Executing_User, COUNTRY_SHORT_TEXT
+
+There is a relationship 1:M relationship between these tables where 1 is to the mard_mdna_T_HR_MINIMASTER_COUNTRY table 
+Columns used for relationship is ExecutingUser, Executing_User
+
+I want to have a measure called Count_Countries which counts
+how many COUNTRY_SHORT_TEXT will be there with respect to mard_mdna_t_pbi_user_interaction_data
+
+Count_Countries = 
+CALCULATE(
+    DISTINCTCOUNT(mard_mdna_T_HR_MINIMASTER_COUNTRY[COUNTRY_SHORT_TEXT]),
+    CROSSFILTER(
+        mard_mdna_t_pbi_user_interaction_data[ExecutingUser],
+        mard_mdna_T_HR_MINIMASTER_COUNTRY[Executing_User],
+        BOTH
+    )
+)
+
+Access_Date_Workspace_ID = mard_mdna_t_pbi_user_interaction_data[Access_Date]&"--"&mard_mdna_t_pbi_user_interaction_data[PowerBIWorkspaceId]
+Access_Date_Workspace_ID = mard_mdna_t_pbi_views_users_ratio[Access_Date]&"--"&mard_mdna_t_pbi_views_users_ratio[PowerBIWorkspaceId]
+
+Table Details
+
+Access Date
+Power BI workspace ID
+Report_Views
+Report
+
+I have a table called mard_mdna_t_pbi_user_interaction_data
+Column Name: Access_Date_Workspace_ID
+Measure Name: Unique Users log Analytics
+
+
+I have another table: mard_mdna_t_pbi_views_users_ratio
+Another Column name: Access_Date_Workspace_ID
+Column Name: Views_Users_Ratio
+Alos Access_Date_Workspace_ID is the Primary Key of the table
+
+
+
+I want to create a DAX measure in table: mard_mdna_t_pbi_user_interaction_data using the below logic
+the measure should do a lookup based on the common column Access_Date_Workspace_ID and the value will be equal to = 
+look up value of (Views_Users_Ratio) * Unique Users log Analytics
+
+And there is no relationship between them and I cannot change the relationship now
+
+
+Table Name: mard_mdna_t_pbi_views_users_ratio
+
+I have a
+Table Name: mard
+Table Name:  mard_mdna_t_user_interaction_department
+Using the following columns group by the following columns 
+Access_Date
+PowerBIWorkspaceId
+HIGHEST_ORG_AREA
+count distinct (ExecutingUser) for these using Pyspark in MS Fabric name this column as Uniique Users
+Rename HIGHEST_ORG_AREA as Organization
+Create a column called Date_ID from Access_Date which will be of yyyymmdd (Access_Date is of Date/Time Type)
+Create a column called Date_ID_PBI_WS_ID which is a combination of Date_ID"_"PowerBIWorkspaceId
+
+
+Sample how data is brought in Pyspark in Fabric
+df = spark.sql("SELECT * FROM Click_Dashboard.mard_mdna_t_user_interaction_department LIMIT 1000")
+display(df)
+
+
+Table Name: mard_mdna_t_pbi_views_users_ratio
+Make another data frame from the columns
+Access_Date
+PowerBIWorkspaceId
+Views_Users_Ratio
+Create a column called Date_ID from Access_Date which will be of yyyymmdd (Access_Date is of Date/Time Type)
+Create a column called Date_ID_PBI_WS_ID which is a combination of Date_ID"_"PowerBIWorkspaceId
+Check Date_ID_PBI_WS_ID is the primary key or not
+
+
+I have a spark dataframe called: df_org_unique_users
+Having the following columns: root
+ |-- Access_Date: timestamp (nullable = true)
+ |-- Date_ID: string (nullable = true)
+ |-- PowerBIWorkspaceId: string (nullable = true)
+ |-- Organization: string (nullable = true)
+ |-- Date_ID_PBI_WS_ID: string (nullable = true)
+ |-- Unique_Users: long (nullable = false)
+
+ I have another spark dataframe called: df_views_ratio
+ Having the following columns:
+|-- Access_Date: timestamp (nullable = true)
+ |-- PowerBIWorkspaceId: string (nullable = true)
+ |-- Views_Users_Ratio: float (nullable = true)
+ |-- Date_ID: string (nullable = true)
+ |-- Date_ID_PBI_WS_ID: string (nullable = true)
+
+ I want to create a dataframe called df_org_user_views
+ Left join df_org_unique_users and df_views_ratio after the join the schema should be only Views_Users_Ratio to be added from df_views_ratio and if the value is null or blank then what ever is the value of Unique_Users should be used
+Column for joining Date_ID_PBI_WS_ID
+Schema after join
+
+ |-- Access_Date: timestamp (nullable = true)
+ |-- Date_ID: string (nullable = true)
+ |-- PowerBIWorkspaceId: string (nullable = true)
+ |-- Organization: string (nullable = true)
+ |-- Date_ID_PBI_WS_ID: string (nullable = true)
+ |-- Unique_Users: long (nullable = false)
+|-- Views_Users_Ratio: float (nullable = true)
+
+Add a column Report_Views = Ceiling value of (Views_Users_Ratio*Unique_Users)
+
+
+I want to have distinct values from this table mard_mdna_T_HR_MINIMASTER_COUNTRY
+for the column HIGHEST_ORG_AREA rename as Original_Organization
+
+and create conditional column from it and name it as Organization
+If = Original_Organization
+EM or ME or PS or VM or XC or ETAS or MA
+then the value remains same
+if Original_Organization = M or C then M/C
+If  Original_Organization= BD or BGSW then BD/BGSW
+If Original_Organization = GS or SO then GS/SO
+rest of the other Original_Organization as grouped as Others
+
+thn save this as a table in Lakehouse
+
+Table_Name: mard_mdna_t_custom_org
