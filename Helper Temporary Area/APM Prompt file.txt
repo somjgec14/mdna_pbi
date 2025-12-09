@@ -1,0 +1,17 @@
+I have the following table in Lakehouse LH_APM.mard_apm.t_pbi_cu_percent In LH_APM.mard_apm.t_pbi_cu_percent
+Column Description: 
+ |-- Timepoint: timestamp (nullable = true)
+ |-- Date: date (nullable = true)
+ |-- Interactive_CU_Percent: double (nullable = true)
+ |-- Background_CU_Percent: double (nullable = true)
+ |-- Cumulative_CU_Percent: double (nullable = true)
+ |-- CapacityID: string (nullable = true)
+
+There is a column called Timepoint which is of time stamp and contains data every 30 seconds in the following format 2025-09-25 00:43:30
+
+I want to aggregate and find out that from Monday to Sunday which one is the busisest day and which one is busisest hour in the dat and show it in chart based 
+on the maximum value of Interactive_CU_Percent
+
+ and only calaculated for all CapacityID 
+
+ The number of charts depends on the number of disctinct Capacity IDs

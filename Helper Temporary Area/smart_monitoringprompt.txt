@@ -1,0 +1,134 @@
+I have the following pyspark code
+# 1. First create the date range
+dates_df = spark.sql("""
+    SELECT explode(sequence(
+        to_timestamp('2025-05-01 00:00:00'), 
+        date_sub(current_timestamp(), 1), 
+        interval 1 day
+    )) as Date
+""")
+
+I have a static value here: to_timestamp('2025-05-01 00:00:00'),
+I want to change this value and make it dynamic.
+The value should come from the table mDNA_PBI_Monitoring.mard_mdna_t_pbi_sm_smart_monitoring
+Relevant column name and datatype
+Date: timestamp
+Logic for value it should be the max of date +1 
+MEans if the max date present in the table is 12th May 
+then the new dynamic line will process the following value 
+to_timestamp('2025-05-13 00:00:00') 
+
+Max date is 12th may 2025 so processing starts from 13th May 2025
+
+Sample to extarct data via pyspark shown here
+df = spark.sql("SELECT * FROM mDNA_PBI_Monitoring.mard_mdna_t_pbi_sm_smart_monitoring LIMIT 1000")
+display(df)
+
+
+
+I have the following pice of code
+from pyspark.sql.functions import when, col, expr
+
+df_sm_refresh_schedule_final = df_sm_refresh_schedule_temp.withColumn(
+    "Time_Of_the_Day_UTC",
+    when(col("Time_zone") == "SE Asia Standard Time", 
+         expr("Time_of_the_Day - interval 7 hours"))
+    .when(col("Time_zone").isin("W. Europe Standard Time", 
+                                "Romance Standard Time", 
+                                "Central Europe Standard Time"), 
+         expr("Time_of_the_Day - interval 2 hours"))
+    .when(col("Time_zone") == "India Standard Time", 
+         expr("Time_of_the_Day - interval 5 hours 30 minutes"))
+    .when(col("Time_zone").isin("GMT Standard Time", "UTC"), 
+         col("Time_of_the_Day"))
+    .when(col("Time_zone") == "E. South America Standard Time", 
+         expr("Time_of_the_Day + interval 3 hours"))
+    .otherwise(col("Time_of_the_Day"))  # Default if no match
+)
+
+print(f"No of rows in final = {df_sm_refresh_schedule_final.count()}")
+display(df_sm_refresh_schedule_final)
+
+I have a table called : df_sm_refresh_schedule_temp
+
+Having the following schema
+root
+ |-- Workspace_ID: string (nullable = true)
+ |-- Workspace_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+ |-- Time_of_the_Day: timestamp (nullable = true)
+ |-- Time_zone: string (nullable = true)
+ |-- Time_of_the_Day_Time_stamp: timestamp (nullable = true)
+ |-- Time_Of_the_Day_UTC: timestamp (nullable = true)
+
+
+Another table is there called mDNA_PBI_Monitoring.mard_mdna_t_utc_Conversions having the following values
+
+ |-- Year: long (nullable = true)
+ |-- Day_Date: string (nullable = true)
+ |-- Abbreviation: string (nullable = true)
+ |-- Time_Change: string (nullable = true)
+ |-- UTC_Offset: double (nullable = true)
+ |-- Foreign_Key: string (nullable = true)
+ |-- Date_Time: timestamp (nullable = true)
+ |-- Range_Start: timestamp (nullable = true)
+ |-- Range_End: timestamp (nullable = true)
+ |-- Time_zone: string (nullable = true)
+
+
+ I am using the following code to create a column called Time_Of_the_Day_UTC which converts the local time column name Time_of_the_Day from df_sm_refresh_schedule_temp  
+ into UTC times. Now everything is static. I want to make it dynamic. 
+ From the table mDNA_PBI_Monitoring.mard_mdna_t_utc_Conversions I can select the time zone date which will be able to extract the UTC offset. This is for day light savings.
+
+ So the logic will be suppose we are running this code on 18th nov then first for a row in df_sm_refresh_schedule_temp we should check 
+ what is the timezone (column name: Time_zone) if it is UTC then no action required the Time_Of_the_Day_UTC wlll be same else 
+ it should go the mard_mdna_t_utc_Conversions table and find the timezone then multiple 
+ rows will match then it should check that today's date falls in which Range_Start and Range_End dates todays date should be greater than equal to Range_Start and less
+ than equal to Range_End
+ then it will find the UTC.Offset which is a decimal number 
+ so if the value is 1.0 then it should add 1 hour then Time_Of_the_Day_UTC = Time_of_the_Day +1 hour 00 mins
+so if the value is 5.3 then it should add 5 hour and 30 mins then Time_Of_the_Day_UTC = Time_of_the_Day +5 hours 30 mins
+so if the value is -3.0 then it should subtract 3 hour then Time_Of_the_Day_UTC = Time_of_the_Day - 3 hours 00 mins
+
+
+
+
+
+This is the existing static code
+
+ from pyspark.sql.functions import when, col, expr
+
+df_sm_refresh_schedule_final = df_sm_refresh_schedule_temp.withColumn(
+    "Time_Of_the_Day_UTC",
+    when(col("Time_zone") == "SE Asia Standard Time", 
+         expr("Time_of_the_Day - interval 7 hours"))
+    .when(col("Time_zone").isin("W. Europe Standard Time", 
+                                "Romance Standard Time", 
+                                "Central Europe Standard Time"), 
+         expr("Time_of_the_Day - interval 2 hours"))
+    .when(col("Time_zone") == "India Standard Time", 
+         expr("Time_of_the_Day - interval 5 hours 30 minutes"))
+    .when(col("Time_zone").isin("GMT Standard Time", "UTC"), 
+         col("Time_of_the_Day"))
+    .when(col("Time_zone") == "E. South America Standard Time", 
+         expr("Time_of_the_Day + interval 3 hours"))
+    .otherwise(col("Time_of_the_Day"))  # Default if no match
+)
+
+print(f"No of rows in final = {df_sm_refresh_schedule_final.count()}")
+display(df_sm_refresh_schedule_final)
+
+
+Two New Fileds 
+
+Mandatory
+CRQ
+CRQ000001131052
+
+
+T&R Item Link (Example: https://rb-tracker.bosch.com/tracker03/browse/BBMRL-955)
+https://rb-tracker.bosch.com/tracker03/browse/BBMRL-955, https://rb-tracker.bosch.com/tracker03/browse/BBMRL-956
+
+Deployment Note
+As per the approvals given in T&R Item Link. CRQ to Track: CRQ

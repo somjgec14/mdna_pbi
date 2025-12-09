@@ -1,0 +1,23 @@
+Scenerios Tested:
+Creating a new compute cluster: Passed
+Deleting an existing compute cluster: Passed
+Replacing an exisitng compute cluster with same name and different compute configuration:
+Test scenerio:Failed
+Compute cluster: mdna-ml-compute-cluster-001 with Standard_D11_v2 (2 cores, 14 GB RAM, 100 GB disk) 
+is being repalced by Standard_D13_v2
+Exisitng Principal ID: System assigned identity: f03c6032-54b9-4081-a3b2-c469415c09f8
+
+Pipeline run History: https://dev.azure.com/BBMRedlake/BBMRedlake/_build/results?buildId=851&view=results
+
+After test: 
+Before the approval it showed that it is going to delete and create the new one. After running the pipeline. The old one got deleted and no new compute cluster was created and the pipeline ran successfully
+What ifs scenerios
+What happens if ML Compute Cluster List is blank and I run the pipeline
+
+After the pipeline run: 
+
+What ifs scenerios
+What happens if ML Compute Cluster List is blank and I run the pipeline
+
+Good to have:
+Email notification for approval

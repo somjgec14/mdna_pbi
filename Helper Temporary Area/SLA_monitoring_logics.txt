@@ -1,0 +1,31 @@
+I have the following dataframe: 
+df_sm_manual
+Columns: 
+ |-- Application_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+
+Another Table with the following columns: 
+Table Name: LH_SLA_Monitoring.mard_sla.t_sm_metadata 
+From this table i have the following columns: 
+|-- WorkspaceID: string (nullable = true) 
+|-- WorkspaceName: string (nullable = true) 
+|-- SM_ID: string (nullable = true) 
+|-- SM_Name: string (nullable = true) 
+|-- Web_URL: string (nullable = true) 
+|-- configured_by: string (nullable = true) 
+|-- is_Refreshable: boolean (nullable = true) 
+|-- target_Storage_Mode: string (nullable = true) 
+|-- created_Date: string (nullable = true) 
+
+I want to create a new df called df_wid_smid 
+Which will have the following columns 
+Distinct combination of WorkspaceID, WorkspaceName, SM_ID, SM_Name and 
+these are to be renamed as following: Workspace_ID, Workspace_Name, Semantic_Model_ID, Semantic_Model_Name
+and then filter out only those columns
+Where Semantic_Model_ID = emantic_Model_ID from df_sm_manual
+
+Then fianlly show the entire dataframe: df_wid_smid 
+
+Table Name: 
+LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
