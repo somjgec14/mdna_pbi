@@ -1,0 +1,27 @@
+I have the following target table: 
+ LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
+ ANd the following columns
+ |-- Workspace_ID: string (nullable = true)
+ |-- Workspace_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+ I have a source datfarame called df_refresh_history
+ having the following columns
+ |-- Workspace_ID: string (nullable = false)
+ |-- Workspace_Name: string (nullable = false)
+ |-- Semantic_Model_ID: string (nullable = false)
+ |-- Semantic_Model_Name: string (nullable = false)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+
+Now from the source dataframe

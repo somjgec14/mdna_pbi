@@ -1,0 +1,104 @@
+	
+
+
+
+Enabling OKR Method in Arcitecture (Andreas, Arch- Team)
+•	OKR Method in Operations (Frauke, Ops-Team)
+ 
+ 
+•	I2S Evolution Process
+•	Prozess: Description and start of implementation (Timo, Benjamin, Core Team, BEG-Team)
+•	Tool: Activity Navigator (Kuba, Andreas)
+ 
+ 
+•	Team WorkShops  -- Add
+•	02.2025 - MCR-Team in Bangalore
+•	05.2025 - MS-Team in Stgt (ACROSS)
+•	08.2025 - MS-Team in Ho Chi Minh (handover)
+•	10.2025 - Team Workshops in Stgt
+ 
+ 
+•	EY-Audit
+•	on time closure in 10.2025 with no findings (Benjamin, Rahul, Sreekanth, Sai, Kranthi) 
+ 
+ 
+•	New Technologies: AI and ML Sahm Team collaboration
+•	ML Use Cases: Risk Status, E2E (Samira, Sumit, Soumya)
+•	AI Data Analyzer / m.DNA Data Chat (Marvin, Axel, Sumit, Soumya)
+ 
+ 
+•	Operation Excellence Enhancements
+•	split of PowerBI to two capacities (Soumya, Anh)
+•	implementation of CI/CD in Azure completed, CI in PowerBI and CI/CD in REDMesh started (Soumya, Georgi, Sebastian)
+•	improvement in automatic setup of Synapse "Infrasturcture as Code" from one week to one hour (Georgi, Soumya, Sebastian)
+ 
+ 
+•	SLA Implementation (Christian, Frauke, Domain Managers)
+•	more than 20 implemented SLA 
+•	implementation of SLA in I2S Evo
+ 
+ 
+•	Regression Testing (Sumit)
+•	infrastructure implemented
+ 
+ 
+•	BW-Landsacpe Decommissioning
+•	reduction of BD D&Q-Environment (MIU, TIU) (Christian)
+•	offboardig all applications from PBF (Snigdha)
+ 
+ 
+•	Data Services (Sebastian, Jainendra, Adrian)
+•	implementation of exporation for "modelled data"
+•	GB-User (Replacement PS Lake)
+•	processing of data service requests
+ 
+ 
+•	Recognition  --- Add
+•	second place in X-Perience Award
+ 
+ 
+•	Publicity Work
+•	05.2025 - ??? (LB)
+•	07.2025 - Data Tech-Sumit (Si)
+•	11.2025 - Analytics Day 
+ 
+ 
+•	S/4 Support Activities
+•	go live of Ready-to-DRIVE Analytics with 250 TEUR saving (Jainendra, Sai, Simge)
+•	Affiliate Activities "Reporting Continuity for local Apps" (Christian, Michael)
+ 
+ 
+•	Click DashBoard (Soumya, Sumit)
+•	implementation of division and region analysis
+•	reaching key figures
+•	02.2025: 10.000 unique users
+•	11.2025: 1 mio Clicks
+ 
+ 
+•	Applications (all m.DNA)
+•	go live: ACROSS, EBIT Tracking NP, MatCH, …
+ 
+ 
+Relocation
+•	Web-Based Training go-live (Sudheendra)
+
+
+
+Success Story
+RACE OWIT Migration successfull with additional useful features is appreciated by Business. A critical prerequisite for PBF shutdown
+ECMFuture UserCockpit GoLive -Helping users to have one stop overview of Engineering change request in their responsibility.
+Project  Risk Status Forecast  - with 75 to 83 % accurecy predicting Risk 
+Text to Query PoC 
+MCR/CSS EY Audit 2025
+Efficient platform management using internally developed tools
+Initiated Cost Saving 1 mEuro : Completed transition/migration of 14 Applications out of PBF to be able to shutdown PBF 
+Pay-per-activation process established with Daimler Truck.
+All customer feedback from CX5 ratings scoring 5 out of 5 stars.
+More than 10 plants piloted
+High customer satisfaction with promoter users
+Onsite visit in China for direct demonstration and requirements Collection
+Very good customer satisfaction and good feedback from users leading to new Use Cases for next year.
+Successfully turned the PoC into an MVP
+Team Workshops across various locations in India Germany and Vietnam
+second place in X-Perience Award
+Click DashBoard Organization Views

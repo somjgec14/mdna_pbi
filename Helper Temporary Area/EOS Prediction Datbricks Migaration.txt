@@ -1,0 +1,17 @@
+
+Zeus is the source for EOS Prediction
+
+1:1 mapping
+
+MSP Data
+
+Qua to PRD Tables
+
+
+Sources: Tables from Zeus P
+
+3 pipelines
+
+Notebooks write into parquet file ad then from Parquet file to Tables
+
+10 notebooks and 

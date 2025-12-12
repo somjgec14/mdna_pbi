@@ -15,3 +15,187 @@ on the maximum value of Interactive_CU_Percent
  and only calaculated for all CapacityID 
 
  The number of charts depends on the number of disctinct Capacity IDs
+
+
+ I have a table called: 
+ LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
+ ANd the following columns
+ |-- Workspace_ID: string (nullable = true)
+ |-- Workspace_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+
+
+ I have an exsiting dataframe called :  df_sm_manual with the following columns
+    |-- Application_Name: string (nullable = true)
+    |-- Semantic_Model_ID: string (nullable = true)
+    |-- Semantic_Model_Name: string (nullable = true)
+
+ Now I want to create another dataframe called df_temp which will have the same schema as  LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
+ and it will filter out the rows based on the following condition
+
+Semantic_Model_ID from LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history = Semantic_Model_ID from df_sm_manual
+
+ALso I want the stats/logs that how many semantic model Ids was found in LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history and how many not found
+Also need the total no of rows for df_temp and column dattypes just to be sure
+
+
+Can you clearify the logs or stats little better 
+I need to know how many semantic models were present in df_sm_manual and not found in df_temp
+also need the row count of df_temp
+
+2025-12-11 04:51:27,334 - WARNING - Details of NOT FOUND Semantic_Model_IDs:
+2025-12-11 04:51:27,335 - WARNING - ----------------------------------------------------------------------------------------------------
+2025-12-11 04:51:30,130 - WARNING -    1. Semantic_Model_ID: dad05ad5-7098-4caf-971b-db8a85df83b2
+2025-12-11 04:51:30,131 - WARNING -       Semantic_Model_Name: MCR Project Reporting Flat Yearly
+2025-12-11 04:51:30,131 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,131 - WARNING - 
+2025-12-11 04:51:30,132 - WARNING -    2. Semantic_Model_ID: 57c1795f-4b54-4bbc-92cf-f8e5b06b06c3
+2025-12-11 04:51:30,133 - WARNING -       Semantic_Model_Name: CSM
+2025-12-11 04:51:30,134 - WARNING -       Application_Name: BBMSP
+2025-12-11 04:51:30,135 - WARNING - 
+2025-12-11 04:51:30,135 - WARNING -    3. Semantic_Model_ID: ee9ff47b-09ab-41d1-8275-963937201664
+2025-12-11 04:51:30,136 - WARNING -       Semantic_Model_Name: MCR Project Details Report_Yearly
+2025-12-11 04:51:30,137 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,137 - WARNING - 
+2025-12-11 04:51:30,138 - WARNING -    4. Semantic_Model_ID: 52d85bd9-0de6-4766-8854-49b0d43b1d72
+2025-12-11 04:51:30,138 - WARNING -       Semantic_Model_Name: MCR_MasterData
+2025-12-11 04:51:30,139 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,140 - WARNING - 
+2025-12-11 04:51:30,140 - WARNING -    5. Semantic_Model_ID: 3544f254-d2d1-4358-8c59-6c7a5919b126
+2025-12-11 04:51:30,141 - WARNING -       Semantic_Model_Name: MCR Project Reporting Flat_XLS
+2025-12-11 04:51:30,141 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,142 - WARNING - 
+2025-12-11 04:51:30,142 - WARNING -    6. Semantic_Model_ID: b7dbd61d-88ea-404a-a6d7-c35c74b91157
+2025-12-11 04:51:30,143 - WARNING -       Semantic_Model_Name: MCR Project Reporting Flat
+2025-12-11 04:51:30,143 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,144 - WARNING - 
+2025-12-11 04:51:30,144 - WARNING -    7. Semantic_Model_ID: a1b9f86d-8fd2-4827-912b-347b97c9769c
+2025-12-11 04:51:30,145 - WARNING -       Semantic_Model_Name: MCR_Project_R&D_Costs
+2025-12-11 04:51:30,145 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,145 - WARNING - 
+2025-12-11 04:51:30,146 - WARNING -    8. Semantic_Model_ID: 1b8a61e3-fbd7-4702-9c5c-00e5d1640680
+2025-12-11 04:51:30,146 - WARNING -       Semantic_Model_Name: MCR Project Details Report
+2025-12-11 04:51:30,147 - WARNING -       Application_Name: MCR
+2025-12-11 04:51:30,147 - WARNING - 
+2025-12-11 04:51:30,148 - WARNING - ----------------------------------------------------------------------------------------------------
+
+
+
+I have a column in excel called requestId there are other columns as well
+
+I want to add another column called hasRepetation
+If the request ID is repaeting then the hasRepetation is True else value should be false
+requestId is column B in excel and hasRepetation is in G
+
+
+I have the following DAX Code: 
+Operation_type = 
+SWITCH(
+    TRUE(),
+    
+    -- Interactive Operations (user-initiated, real-time)
+    t_pbi_cu_consumption_impact_mins[Operation_name] IN {
+        "AI Function Evaluation",
+        "AI Query",
+        "Copilot In Fabric",
+        "Notebook Run",
+        "Power BI Scripting Visual Execution",
+        "Query",
+        "Render",
+        "SQL Endpoint Query",
+        "Warehouse Query",
+        "Web Modeling Read Operation",
+        "Web Modeling Write Operation",
+        "XMLA Read Operation",
+        "XMLA Write Operation",
+        "OneLake Read via Proxy",
+        "OneLake Read via Redirect",
+        "OneLake Write via Proxy",
+        "OneLake Write via Redirect",
+        "OneLake Iterative Read via Proxy"
+    }, "Interactive",
+    
+    -- Background Operations (scheduled, automated, system-managed)
+    t_pbi_cu_consumption_impact_mins[Operation_name] IN {
+        "ActivityRun",
+        "Dataflow Gen2 Refresh",
+        "Dataflow Refresh",
+        "DataMovement",
+        "Dataset On-Demand Refresh",
+        "Dataset Scheduled Refresh",
+        "Event Computations",
+        "Event Ingestion",
+        "EventHouse UpTime",
+        "Eventstream Connector Per vCore-hour",
+        "Eventstream Data Traffic Per GB",
+        "Eventstream Per Hour",
+        "Eventstream Processor Per Hour",
+        "Full Report Email Subscription",
+        "High Scale Dataflow Compute - Warehouse Query",
+        "Lakehouse Operations",
+        "Lakehouse Table Load",
+        "Notebook HC Run",
+        "Notebook Pipeline Run",
+        "Notebook Scheduled Run",
+        "OneLake Other Operations",
+        "OneLake Other Operations Via Redirect",
+        "PublicApiExport",
+        "Rule Uptime Per Hour",
+        "SubscriptionExport"
+    }, "Background",
+    
+    -- Default case for any unmatched operations
+    "Unknown"
+)
+
+
+
+
+It workrd like a charm now want to do the following
+Loaded Dataframe info: 
+Dataframe Name: df_temp_igpm
+================================================================================
+DATAFRAME INFO
+================================================================================
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1651 entries, 0 to 1650
+Data columns (total 9 columns):
+ #   Column               Non-Null Count  Dtype         
+---  ------               --------------  -----         
+ 0   Workspace_ID         1651 non-null   object        
+ 1   Workspace_Name       1651 non-null   object        
+ 2   Semantic_Model_ID    1651 non-null   object        
+ 3   Semantic_Model_Name  1651 non-null   object        
+ 4   requestId            1651 non-null   object        
+ 5   refreshType          1651 non-null   object        
+ 6   startTime            1651 non-null   datetime64[ns]
+ 7   endTime              1651 non-null   datetime64[ns]
+ 8   status               1651 non-null   object  
+
+ I have an exisitng table in Lakehouse named: 
+ LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
+ ANd the following columns
+ |-- Workspace_ID: string (nullable = true)
+ |-- Workspace_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+I now want to append the data from df_temp_igpm into this table
+After appending I want the following stats
+No of rows before appending
+No of rows after appending
+Total Rows added
+Column Names
+Column Datatypes
