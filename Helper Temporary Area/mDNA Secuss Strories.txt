@@ -102,3 +102,174 @@ Successfully turned the PoC into an MVP
 Team Workshops across various locations in India Germany and Vietnam
 second place in X-Perience Award
 Click DashBoard Organization Views
+
+
+SKYNET
+
+Ask BBM Process Compass Agent 
+Provision of a Process Compass Data API including MCP
+Already 3 customers/usecases onboarded
+Development of an automated evaluation pipeline with high focus on improving the answer quality
+Successful PoC on the Google Cloud Platform Stack
+
+
+Successfully turned the PoC into MVP for BBM Sales Pathfinder by collaboration with the Sales teams of the different divisions
+
+I have to give a pitch on the sucess stories of our tribe: Mobility Data Analytics and AI
+Could you please prepeare me a nice script based on the bewlo topics and the script should be of 5 mins; I should start something like this year 
+2025 was quite a eventful year where we had lot of topics out of which we have chosen and these are the not the only ones"
+
+Regular Go-Lives and Work topics: 
+Project MDNA: RACE OWIT Migration: 🚀 earned business appreciation, and a key step for SAP BW PBF shutdown. 
+Project Data Management Consulting & Implementation: Pay-per-activation process established with Daimler Truck.
+Project GenAI: Mobility Manufacturing Agent (MMA) (GenAI) has piloted 10 plants
+Project MDNA: ECMFuture UserCockpit GoLive -Helping users to have one stop overview of Engineering change request in their responsibility.
+Project mDNA: MCR/CSS EY Audit 2025 - Successful Completion
+Project BBM AI Performance Hub: BOSCH Ask BBM Process Compass Agent  expands: Provision of a Process Compass Data Crawler and API including MCP 
+
+Customer centricity and feedback: 
+Project Data Management Consulting & Implementation: Earned Customer feedback from CX5 ratings scoring 5 out of 5 stars.
+Project mDNA: Second place in X-Perience Award
+Project GenAI : Very good customer satisfaction and good feedback from users leading to new Use Cases for next year. Publicity bt customer is the best kind of marketing that we can wish for
+Project BBM AI Performance Hub: Successful PoC on the Google Cloud Platform Stack
+Project mDNA: Text to SQL Query PoC successfully completed
+Project Mobility Manufacturing Agent (MMA): High customer satisfaction with promoter users for MMA
+
+POCs to MVP: 
+Project BBM AI Performance Hub: Successfully turned the PoC into MVP for BBM Sales Pathfinder by collaboration with the Sales teams of the different divisions integrating with BBM Agent Portal
+Project GenAI and mDNA: Successfully turned the PoC into an MVP Project  Risk Status Forecast  - with 75 to 83 % accuracy predicting Risk
+Project mDNA: Text to SQL Query PoC successfully completed
+Project BBM AI Performance hub: Successful PoC on the Google Cloud Platform Stack for topics of AIperformance hub
+
+Workshops which help to foster team building knowledge sharing and growth: 
+Team Workshops across various locations in India Germany and Vietnam
+Onsite visit in China for direct demonstration and requirements Collection
+
+Cost Saving Topics
+Project mDNA: Initiated Cost Saving 1mEuro: Completed transition/migration of 14 Applications out of PBF to be able to shutdown PBF 
+Project mDNA: Efficient platform management using internally developed tools helped to save a lot of money and helped to reinvest
+Project mDNA: Click Dashboard with organization data 
+
+
+(Slide 1: Engaging Title Slide - "Mobility Data Analytics & AI Tribe: A Year of Impact - 2025 Highlights")
+
+Presenter: Good morning/afternoon, everyone!
+Myself Soumya and I would be representing Mobility Data Analytics & AI Tribe. 
+
+2025 was quite an eventful year where we had a lot of topics, out of which we have chosen these highlights, 
+but these are not the only ones. 
+
+(Transition to Slide 2: "Delivering Value: Regular Go-Lives & Key Work Topics") --skip
+
+Let's dive straight into the value we delivered. 
+
+RACE OWIT Migration was a huge success, having significant business appreciation and 
+paving the way for the crucial SAP BW PBF shutdown. 
+
+Our team in Data Management Consulting & Implementation Program has established 
+a new pay-per-activation process with Daimler Truck, streamlining their operations.
+
+A major leap forward was Project GenAI: 
+Mobility Manufacturing Agent (MMA), 
+which we successfully piloted in 10 plants – a true testament to our innovative spirit. 
+
+We also celebrated the GoLive of ECMFuture UserCockpit under Project MDNA, 
+providing a much-needed one-stop overview for engineering change requests, 
+simplifying processes for our users. 
+And on the compliance front, we have the  successful completion of :MCR/CSS EY Audit 2025 with no findings
+
+Also BBM AI Performance Hub saw significant expansion with the  Ask BOSCH BBM Process Compass Agent, 
+now providing a comprehensive Process Compass Data Crawler and API, including MCP capabilities. 
+
+This was a year of relentless execution!
+
+---Next section
+
+But it’s not just about what we built; it’s about the impact on our customers. 
+Our dedication to customer centricity truly shined. 
+Data Management Consulting & Implementation received stellar feedback, 
+achieving a perfect CX5 rating of 5 out of 5 stars – a remarkable achievement. 
+
+Our innovation was also recognized with mDNA winning second place in the X-Perience Award!
+
+Across the board, Project GenAI boasted high customer satisfaction and incredibly positive user feedback, 
+directly translating into new use cases and continued demand. 
+And a special shout-out to Mobility Manufacturing Agent (MMA), 
+which is already generating high customer satisfaction 
+and a growing base of promoter users which is the best way of marketing
+Our users are seeing the difference.
+
+From PoC to MVP: Innovation in Action"
+Our commitment to innovation means constantly moving ideas from concept to reality. 
+
+The BBM AI Performance Hub is a prime example, transitioning its PoC for BBM Sales Pathfinder to a full MVP, 
+integrating seamlessly with the BBM Agent Portal and fostering strong collaboration with sales teams.
+
+A truly exciting development was the PoC to MVP conversion for Project Risk Status Forecast 
+within our GenAI and mDNA initiatives. 
+This powerful tool is now predicting project risk with an impressive 75-83% accuracy, giving us a significant edge in proactive management. 
+In mDNA Text to SQL Query PoC was successfully completed, laying groundwork for future advancements. 
+The PoC on the Google Cloud Platform Stack for BBM AI performance hub topics, 
+validating our technological direction.
+
+(Transition to Slide 6: "Smart Solutions: Cost-Saving Initiatives")
+
+And of course, we are always focused on efficiency and smart resource management. 
+We delivered significant cost savings of 1 million Euros by completing the transition and migration 
+of 14 applications from PBF for shutdown – a huge win! 
+We also achieved efficient platform management from Operations excellence 
+through internally developed tools, saving money and enabling us to reinvest in further innovation. 
+Finally, our Project mDNA: Click Dashboard is providing valuable insights by centralizing and 
+visualizing organizational data, driving smarter decision-making.
+
+NExt and one of the most important topics i.e. Growing Together: Workshops & Global Collaboration"
+
+Our success isn't just about technology; it's about our people. We held impactful 
+team workshops across India, Germany, Vietnam, Bulgaria
+fostering collaboration and knowledge sharing. 
+
+A highlight was the onsite visit to China, allowing us to directly demonstrate our solutions and gather critical requirements first-hand. 
+These connections strengthen our global footprint and understanding.
+
+
+What a year it has been. Our Mobility Data Analytics and AI team has not only delivered critical projects and fostered strong customer relationships 
+but also continuously innovated and optimized our operations. 
+These highlights represent countless hours of dedication, expertise, and collaboration.
+I think We are not just building tools; we are shaping the future of mobility through data and AI. 
+
+Thanks to Matthias and Rahul for giving me the opportunity to represent the topis here
+
+
+
+9864ff61-3cb9-47bc-a70f-8817bde3cfee/47a2fd20-d3a6-423a-b38f-2d29120020ff
+
+
+Target for Q1: 
+Prepare: KPI 1 for all applications
+
+Target for Q2: 
+Prepare: KPI 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

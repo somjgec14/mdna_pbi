@@ -1,0 +1,291 @@
+# I want to modify the code and send an email to this person "goo6kor@bosch.com"
+# Customized subject: What evr value is there in the CRQNUM
+# Then body should contain this what ever is there in printReport stage.
+# Can this be done ?
+# Interesting link: https://inside-docupedia.bosch.com/confluence/spaces/IMP/pages/3147313827/How+to+send+mails+authenticated+via+SMTP+from+internal+application
+# https://inside-docupedia.bosch.com/confluence/spaces/dirservices/pages/1514823066/OAuth2.0+OpenID+Connect+with+Entra+ID+formerly+AzureAD
+# https://inside-docupedia.bosch.com/confluence/spaces/IMP/pages/1930108709/Shutdown+of+rb-smtp-int.bosch.com
+
+parameters:
+- name: crqnumber
+  displayName: "CRQ Number (ex. CRQ000001131907)"
+  type: string
+  default: " "
+- name: trlnk
+  displayName: "T&R Link (ex. https://rb-tracker.bosch.com/tracker03/browse/BBMRL-955)"
+  type: string
+  default: " "
+- name: pipeline_name
+  displayName: Pipeline name
+  values:
+    - "iGPM MCR Dashboarding"
+    - "EOLIX"
+    - "ProMaCo Pipeline"
+    - "BBMSP"
+    - "Sales Pricing Analysis"
+    - "ETAS FNO Pipeline"
+    - "ETAS PDB Pipeline"
+    - "PjRM"
+    - "m.GMC - C3 TECview"
+    - "Market Monitoring S&P"
+    - "ETAS Service Champaign"
+    - "SaRA Pipeline"
+    - "Ready to DRIVE Analytics Pipeline"
+    - "IDC - Internal Defect Cost Pipeline"
+    - "ECMFuture Analytics"
+    - "AR MBR"
+    - "S4MPDM"
+    - "Plant Maintenance Analytics"
+    - "PLCM-Toolbox"
+    - "Relocation LL-Tool"
+    - "EBIT Tracking NP"
+    - "Concession Monitoring"
+    - "Application Performance Monitoring (APM) [Production]"
+    - "MS Fabric & GIT Integration POC"
+    - "QM Job Status"
+    - "SQW Dashboard"
+    - "iGPM MCR Dashboarding Pipeline"
+    - "PVA Analytics Pipeline"
+    - "ETAS DORA METRICS Pipeline"
+    - "SALORMON Pipeline"
+    - "CI CD Demo Pipeline"
+    - "BBM Eboard CPC Pipeline"
+    - "ECQD Pipeline"
+    - "Click Dashboard Pipeline"
+    - "S2C Reporting"
+    - "Across Fabric"
+    - "Project Risk Status Forecast Pipeline"
+    - "Project Risk Management Pipeline"
+    - "Click Dashboard Helper"
+  type: string
+  default: "CI CD Demo Pipeline"
+- name: dataflows
+  displayName: dataflows
+  type: string
+  default: " "
+- name: datamarts
+  displayName: datamarts
+  type: string
+  default: " "
+- name: datasets
+  displayName: datasets
+  type: string
+  default: " "
+- name: reports
+  displayName: reports
+  type: string
+  default: " "
+- name: dashboards
+  displayName: dashboards
+  type: string
+  default: " "
+
+trigger:
+  - refs/pull/*
+
+pool:
+  name: CICD
+
+variables:
+  - name: CRQNUM
+    value: ${{ parameters.crqnumber }}
+  - name: TRLINK
+    value: ${{ parameters.trlnk }}
+  - name: deploymentnote
+    value: 'According to the approvals given in ${{ parameters.trlnk }} moving the items to production. CRQ to track: ${{ parameters.crqnumber }}' 
+  - name: pipeline
+    value: ${{ parameters.pipeline_name }}
+  - name: dataflows
+    value: ${{ parameters.dataflows }}
+  - name: datamarts
+    value: ${{ parameters.datamarts }}
+  - name: datasets
+    value: ${{ parameters.datasets }}
+  - name: reports
+    value: ${{ parameters.reports }}
+  - name: dashboards
+    value: ${{ parameters.dashboards }}
+  - name: deployment_report
+    value: false
+
+
+stages:
+
+- stage: Approval
+  #dependsOn: Validate
+  displayName: 'Manual approval before deployment'
+  jobs:
+  - job: waitForValidation
+    displayName: Wait for external approval
+    pool: server
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:
+    - task: ManualValidation@1
+      displayName: 'Manual Approval for $(pipeline) PBI application'
+      inputs:
+        notifyUsers: 'Soumya.Ghosh@in.bosch.com,georgi.budinov@bosch.com,Anh.NguyenHoangVan@vn.bosch.com'
+        approvers: 'goo6kor@bosch.com,bug1sf@bosch.com,gay8hc@bosch.com'
+        instructions: |
+          Please review the changes and approve the deployment to PROD.
+          Deployment details:
+          T&R Link: $(TRLINK)
+          CRQ Number: $(CRQNUM)
+          Deployment note: $(deploymentnote)
+
+          Pipeline: $(pipeline)
+          ----------------------------
+          Dataflows: $(dataflows)
+          Datamarts: $(datamarts)
+          Datasets: $(datasets)
+          Reports: $(reports)
+          Dashboards: $(dashboards)
+          
+          Key things to verify:
+          - CRQ should be approved
+          - T&R items contains test cases and closed
+        onTimeout: 'reject'
+
+- stage: deployment
+  dependsOn: Approval
+  displayName: Deployment
+  jobs:
+    - job: deployToProd
+      steps:
+      - task: DeploymentPipelines-Deploy@1
+        inputs:
+          pbiConnection: 'Azure-Devops-mdna-PBI-Connection'
+          pipeline: '$(pipeline)'
+          stageOrder: 'Production'
+          note: '$(deploymentnote)'
+          waitForCompletion: true
+          deployType: 'Selective'
+          dataflows: '$(dataflows)'
+          datamarts: '$(datamarts)'
+          datasets: '$(datasets)'
+          reports: '$(reports)'
+          dahsboards: '$(dashboards)'
+          createNewWS: false
+          allowCreateArtifact: true
+          allowOverwriteArtifact: true
+          updateApp: false
+          allowOverwriteTargetArtifactLabel: true
+          allowPurgeData: true
+          allowSkipTilesWithMissingPrerequisites: true
+          allowTakeOver: true
+
+- stage: printReport
+  #dependsOn: deployment
+  displayName: 'Deployment Report'
+  jobs:
+  - job: deploymentReport
+    displayName: deployment details
+    steps:
+    - task: PowerShell@2
+      displayName: Report
+      inputs:
+        targetType: 'inline'
+        script: |
+            Write-Host "
+            ========================================
+            BUILD REPORT
+            ========================================
+            
+            Pipeline: $(Build.DefinitionName)
+            Build Number: $(Build.BuildNumber)
+            Status: $(Agent.JobStatus)
+            
+            Build Details:
+            ----------------------------------------
+            Triggered by: $(Build.RequestedFor)
+            View Build Results: $(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
+            
+            The following items are deployed to production: 
+            dataflows: '$(dataflows)'
+            datamarts: '$(datamarts)'
+            datasets: '$(datasets)'
+            reports: '$(reports)'
+            dahsboards: '$(dashboards)'
+            
+            UD approvals can be found here : $(TRLINK)
+            CRQ Number to track: $(CRQNUM)
+            
+            Please take care of the update app settings and refresh the data if required.
+            In case of any problems please reach out to Nguyen Hoang Van Anh (BD/DAD-DAN2)  or Ghosh Soumya (BD/MSA-DSD2) .
+            "
+
+
+# Code from ASK BOSCH
+- stage: printReport
+  #dependsOn: deployment
+  displayName: 'Deployment Report'
+  jobs:
+  - job: deploymentReport
+    displayName: deployment details
+    steps:
+    - task: PowerShell@2
+      displayName: Report
+      inputs:
+        targetType: 'inline'
+        script: |
+            Write-Host "
+            ========================================
+            BUILD REPORT
+            ========================================
+            
+            Pipeline: $(Build.DefinitionName)
+            Build Number: $(Build.BuildNumber)
+            Status: $(Agent.JobStatus)
+            
+            Build Details:
+            ----------------------------------------
+            Triggered by: $(Build.RequestedFor)
+            View Build Results: $(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
+            
+            The following items are deployed to production: 
+            dataflows: '$(dataflows)'
+            datamarts: '$(datamarts)'
+            datasets: '$(datasets)'
+            reports: '$(reports)'
+            dahsboards: '$(dashboards)'
+            
+            UD approvals can be found here : $(TRLINK)
+            CRQ Number to track: $(CRQNUM)
+            
+            Please take care of the update app settings and refresh the data if required.
+            In case of any problems please reach out to Nguyen Hoang Van Anh (BD/DAD-DAN2)  or Ghosh Soumya (BD/MSA-DSD2) .
+            "
+    
+    - task: SendEmail@1
+      displayName: 'Send Deployment Report Email'
+      inputs:
+        To: 'goo6kor@bosch.com'
+        From: 'AzureDevOps@bosch.com'  # Adjust this based on your organization's email settings
+        Subject: '$(CRQNUM)'
+        Body: |
+          ========================================
+          BUILD REPORT
+          ========================================
+          
+          Pipeline: $(Build.DefinitionName)
+          Build Number: $(Build.BuildNumber)
+          Status: $(Agent.JobStatus)
+          
+          Build Details:
+          ----------------------------------------
+          Triggered by: $(Build.RequestedFor)
+          View Build Results: $(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
+          
+          The following items are deployed to production: 
+          dataflows: '$(dataflows)'
+          datamarts: '$(datamarts)'
+          datasets: '$(datasets)'
+          reports: '$(reports)'
+          dahsboards: '$(dashboards)'
+          
+          UD approvals can be found here : $(TRLINK)
+          CRQ Number to track: $(CRQNUM)
+          
+          Please take care of the update app settings and refresh the data if required.
+          In case of any problems please reach out to Nguyen Hoang Van Anh (BD/DAD-DAN2)  or Ghosh Soumya (BD/MSA-DSD2) .
+        BodyAsHtml: false
+        SmtpServer: 'your-smtp-server'  # Configure this based on your organization

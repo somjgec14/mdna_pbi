@@ -199,3 +199,5 @@ No of rows after appending
 Total Rows added
 Column Names
 Column Datatypes
+
+
