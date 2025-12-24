@@ -1,0 +1,28 @@
+I am getting the following error when I am trying to create a master date table in MS Fabric Datafow gen 2:
+There was a problem refreshing the dataflow: "Query: Master_Date". Error code: ModelBuilderOutputDestinationFailedRetrievingQueryAnalysis. (Request ID: 00000000-0000-0000-0000-000000000000).
+
+Advanced editor code for master date table: 
+
+Can you modify generate me a m code where the start date is 1st Nov 2025 and it will go one day -1 from which it is running meaning if it runs of 23rd decmeber 2025 max date will be
+22nd Decemeber 2025
+
+Exsitng m code
+let
+  Master_Date = List.Dates(StartDate, NoOfDays, #duration(1,0,0,0)),
+  #"Converted to table" = Table.FromList(Master_Date, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+  #"Changed column type" = Table.TransformColumnTypes(#"Converted to table", {{"Column1", type date}}),
+  #"Renamed columns" = Table.RenameColumns(#"Changed column type", {{"Column1", "Date"}}),
+  #"Inserted year" = Table.AddColumn(#"Renamed columns", "Year", each Date.Year([Date]), type nullable number),
+  #"Inserted quarter" = Table.AddColumn(#"Inserted year", "Quarter", each Date.QuarterOfYear([Date]), type nullable number),
+  #"Inserted month" = Table.AddColumn(#"Inserted quarter", "Month", each Date.Month([Date]), type nullable number),
+  #"Inserted month name" = Table.AddColumn(#"Inserted month", "Month name", each Date.MonthName([Date]), type nullable text),
+  #"Inserted day of week" = Table.AddColumn(#"Inserted month name", "Day of week", each Date.DayOfWeek([Date]), type nullable number),
+  #"Inserted day name" = Table.AddColumn(#"Inserted day of week", "Day name", each Date.DayOfWeekName([Date]), type nullable text),
+  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Inserted day name", "IsWeekday", each if [#"Day of week"] >= 1 and [#"Day of week"] <= 5 then 1 else 0), {{"IsWeekday", Int64.Type}})
+in
+  #"Added custom"
+
+  Additional screenshot:
+
+
+

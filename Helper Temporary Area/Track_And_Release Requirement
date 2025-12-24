@@ -1,0 +1,39 @@
+Objective: Bring the mDNA Track and release data to MS Fabric
+How we can acheive that
+1. Bring the track and release data to oracle via the redmesh platform team and then bring to MS Fabric  --- Known path -- for ETAS team 
+we have done this: Jainendra and Tran Thi Nhung (BD/DAD-DEN2)
+
+2. Using pyspark and Atlassian Rest APIs bring the data to MS Fabric Lakehouse --- Yet to be experimented or tried ---
+
+3. Using Power BI/Power Query get the data and then refresh it. Later on through power Automate + Streaming dataset you can store it back
+to lakehouse  -- Known path
+
+Connecting via API there are two methods
+Via User Name password (WAM/Portal)
+Account ID: GOO6KOR
+
+
+Access Token: 
+MDIyOTUyMDc2ODg1OvV2IUUB8Rb8DRJDiuW52Za3LhuU -- old
+NDg5MDQyMDc3NzM0Oogb2B7owyUBP8/i3R7WA8hngjZ0 --new
+
+
+
+JQL Filter or code
+https://rb-tracker.bosch.com/tracker03/rest/api/2/search?jql=filter=170430&maxResults=50000&expand=projects.issuetypes.fields
+Filter ID:170430 Filter Name: mDNA User Stories
+
+Fabric Workspace:
+https://app.powerbi.com/groups/de40cd8a-5738-403c-ac15-c6009f0dba6a/list?experience=fabric-developer
+
+
+Atlassian Rest API Documentation: 
+https://developer.atlassian.com/server/jira/platform/rest/v10007/api-group-search/
+https://developer.atlassian.com/server/jira/platform/rest/v10007/api-group-search/#api-group-search
+
+Link to Folder for the PBIX Files: 
+https://bosch.sharepoint.com/:f:/r/sites/msteams_8052336/Shared%20Documents/Power%20BI%20Developer%27s%20Garage/Track_%26_Release?csf=1&web=1&e=7uTdHc
+Folder Path Documents --> Power BI Developer's Garage --> Track_&_Release
+File Name: Track_&_Release using Access Token
+
+

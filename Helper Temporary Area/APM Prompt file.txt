@@ -201,3 +201,35 @@ Column Names
 Column Datatypes
 
 
+I have the exisitng table in MS Fabric lakehouse called: 
+Table Name: LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history
+having the following columns:
+ |-- Workspace_ID: string (nullable = false)
+ |-- Workspace_Name: string (nullable = false)
+ |-- Semantic_Model_ID: string (nullable = false)
+ |-- Semantic_Model_Name: string (nullable = false)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+The above table is my analysis/Historical Table.
+
+I have the new source data saved in the dataframe: df_refresh_history with the following columns:
+ |-- Workspace_ID: string (nullable = true)
+ |-- Workspace_Name: string (nullable = true)
+ |-- Semantic_Model_ID: string (nullable = true)
+ |-- Semantic_Model_Name: string (nullable = true)
+ |-- requestId: string (nullable = true)
+ |-- refreshType: string (nullable = true)
+ |-- startTime: timestamp (nullable = true)
+ |-- endTime: timestamp (nullable = true)
+ |-- status: string (nullable = true)
+
+ Now I should append only the latest data into the LH_SLA_Monitoring.mard_sla.t_pbi_sm_refresh_history. How to do that.
+
+ One way could be requestId, Semantic_Model_ID, and status which is kind of primary key together.
+ Can you help me with the code to do this delta/incremental load. and also I want the following stats: 
+ How many rows were orginally in the source dataframe how many rows were there in the historical table before loading and then after loadin how many are there
+ and how many got rejected while loading.

@@ -90,9 +90,37 @@ In Summary:
 
 The REDL_DAX_LOG_QUERY_DATA procedure serves as a data collection agent for SQL query performance and context. It systematically:
 
-Collects recent session history for SELECT statements from gv$ACTIVE_SESSION_HISTORY, filtering out system users and focusing on the last hour. It also captures the initial sql_text from gv$sqlarea and flags queries with potentially truncated sql_text.
+Collects recent session history for SELECT statements from gv$ACTIVE_SESSION_HISTORY, filtering out system users and focusing on the last hour. 
+It also captures the initial sql_text from gv$sqlarea and flags queries with potentially truncated sql_text.
 Retrieves the full SQL text (sql_fulltext) for those flagged queries from gv$sqlarea and stores it in a separate temporary table.
 Combines the historical session data with the full SQL text (if available) and inserts this comprehensive record into a permanent logging table T_DAX_REDL_SEL_PATHS.
 Cleans up the temporary tables to ensure the next execution starts with a fresh slate.
 
-This process aims to provide a detailed log of important SQL SELECT statements that have been executed, including their full text, execution details, and associated session information, for analysis or auditing purposes.
+This process aims to provide a detailed log of important SQL SELECT statements that have been executed, 
+including their full text, execution details, and associated session information, for analysis or auditing purposes.
+
+I have the following code for creating a date table
+I want to add more columns
+like 
+mm-yyyy it will show like if it is June 2025 then 06-2025 
+yyyymm if June 2025 then it should be 202506
+yyyymmdd if date is 1st June 2025 then it should be 20250601
+mmm-yyyy if it is OCtober 2025 then it shoudld be Oct-2025
+let
+  // Set start date to 1st November 2025
+  StartDate = #date(2025, 11, 1),
+  // Calculate number of days from start date to yesterday
+  NoOfDays = Duration.Days(DateTime.Date(DateTime.LocalNow()) - StartDate),
+  Master_Date = List.Dates(StartDate, NoOfDays, #duration(1,0,0,0)),
+  #"Converted to table" = Table.FromList(Master_Date, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+  #"Changed column type" = Table.TransformColumnTypes(#"Converted to table", {{"Column1", type date}}),
+  #"Renamed columns" = Table.RenameColumns(#"Changed column type", {{"Column1", "Date"}}),
+  #"Inserted year" = Table.AddColumn(#"Renamed columns", "Year", each Date.Year([Date]), type nullable number),
+  #"Inserted quarter" = Table.AddColumn(#"Inserted year", "Quarter", each Date.QuarterOfYear([Date]), type nullable number),
+  #"Inserted month" = Table.AddColumn(#"Inserted quarter", "Month", each Date.Month([Date]), type nullable number),
+  #"Inserted month name" = Table.AddColumn(#"Inserted month", "Month name", each Date.MonthName([Date]), type nullable text),
+  #"Inserted day of week" = Table.AddColumn(#"Inserted month name", "Day of week", each Date.DayOfWeek([Date]), type nullable number),
+  #"Inserted day name" = Table.AddColumn(#"Inserted day of week", "Day name", each Date.DayOfWeekName([Date]), type nullable text),
+  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Inserted day name", "IsWeekday", each if [#"Day of week"] >= 1 and [#"Day of week"] <= 5 then 1 else 0), {{"IsWeekday", Int64.Type}})
+in
+  #"Added custom"

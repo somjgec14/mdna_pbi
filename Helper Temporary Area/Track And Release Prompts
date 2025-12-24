@@ -1,0 +1,141 @@
+I want to use the JIRA Atllasian ReSt APIs
+Atlassian Rest API Documentation:
+https://developer.atlassian.com/server/jira/platform/rest/v10007/api-group-search/
+https://developer.atlassian.com/server/jira/platform/rest/v10007/api-group-search/#api-group-search
+
+and then extract Track and Release data
+I have the following Pyspark Code
+# To load data of T&R from Jira API 
+import requests, base64, os
+
+url = "https://rb-tracker.bosch.com/tracker03/rest/api/2/search?jql=filter=170430&maxResults=50&expand=projects.issuetypes.fields"
+ntid = "HUP3HC" 
+pat = "NzAxNTc1NjA4Njk0OsXmceYcWWNaukjEJPYK3h1g2z7m" #faster than WAM Portal
+# portal = "e/C(X3450_6B"
+auth = f"{ntid}:{pat}"
+
+#encode to base64
+encoded_bytes = base64.b64encode(auth.encode("utf-8"))
+encoded_str = encoded_bytes.decode("utf-8")
+
+# Headers
+# headers = {
+#     "Authorization": f"Basic {encoded_str}"
+# }
+headers = {
+    "Authorization": "Bearer NzAxNTc1NjA4Njk0OsXmceYcWWNaukjEJPYK3h1g2z7m",
+    "Accept": "application/json"
+}
+# Get data from T&R url (jql)
+response = requests.get(url, headers=headers)
+
+# # Check response
+# if response.status_code == 200:
+#     data = response.json()
+#     print(data)
+# else:
+#     print(f"Error: {response.status_code} - {response.text}")
+# print(response.text)
+# print(response.status_code)
+
+if response.status_code == 200:
+    print(response.text)
+else:
+    print(f"Error: {response.status_code}")
+
+
+I am getting the following Response code:
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <script language="javascript">
+	tmpurl = window.location.href;
+	tmplocation = "/tfim/sps/oidc/rp/azureadide/kickoff/azureadmgd?URL=" + encodeURIComponent(tmpurl) + "&HOSTNAME=" + window.location.hostname;
+//	tmplocation = "/tfim/sps/oidc/rp/azureadide/kickoff/azureadmgd?HOSTNAME=" + window.location.hostname;
+        window.location.href = tmplocation;
+    </script>
+</head>
+<body>
+    <noscript>
+        <p>Please activate JavaScript in your browser.</p>
+        <p>Bitte aktivieren Sie JavaScript in Ihrem Browser.</p>
+        <p>Merci d'activer la prise en charge du JavaScript par votre
+            navigateur.</p>
+    </noscript>
+</body>
+</html>
+
+However when I use Power Query and Power BI I get the all the required information.
+
+let
+
+    // Define the personal access token
+
+    token = token,
+
+    // Define the headers with the personal access token
+
+    headers = [
+
+        #"Authorization" = "Bearer " & token,
+
+        #"Accept" = "application/json"
+
+    ],
+
+    // Define the options with headers
+
+    options = [
+
+        Headers = headers
+
+    ],
+
+    // Get the JSON data using the personal access token
+
+    Source = Json.Document(Web.Contents("https://rb-tracker.bosch.com/tracker03/rest/api/2/search?jql=filter=170430&maxResults=100&expand=projects.issuetypes.fields%22, options)),
+
+    #"Converted to Table" = Table.FromRecords({Source})
+
+in
+
+     #"Converted to Table"
+  The token used here is same as mentioned earlier
+
+let
+
+    // Define the personal access token
+
+    token = token,
+
+    // Define the headers with the personal access token
+
+    headers = [
+
+        #"Authorization" = "Bearer " & token,
+
+        #"Accept" = "application/json"
+
+    ],
+
+    // Define the options with headers
+
+    options = [
+
+        Headers = headers
+
+    ],
+
+    // Get the JSON data using the personal access token
+
+    Source = Json.Document(Web.Contents("https://rb-tracker.bosch.com/tracker03/rest/api/2/search?jql=filter=170430&maxResults=100&expand=projects.issuetypes.fields%22, options)),
+
+    #"Converted to Table" = Table.FromRecords({Source})
+
+in
+
+     #"Converted to Table"
+ 
+ UserName:GOO6KOR
+ Password:tb)_.0Bi3M2u
