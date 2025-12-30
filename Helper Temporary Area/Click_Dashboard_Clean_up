@@ -1,0 +1,45 @@
+In Dev workspace try the following
+Copy the production data to dev workspace
+
+
+Chrome --> Outh2 --> Power BI report --> Secret ID ---> Access that same report. 
+
+Py Application-->Chrome-->o2--> secretID --->API
+
+Workspace Name: mDNA Click Dashboard [Development]
+Semantic Model Name: Click Dashboard Fabric Semantic Model
+Semantic Model Name from where measures and relationships need to be copied: sm_click_dashboard
+
+Now I want to copy all the measures and relationships from sm_click_dashboard and replicate it in Click Dashboard Fabric Semantic Model
+All the table names are same in both the models. 
+I have heard that using Powering this feature: Semantic Link
+
+This notebook leverages Semantic Link, a python library which lets you optimize Fabric items for performance, memory and cost. The "run_model_bpa" function used in this notebook is just one example of the useful functions which Semantic Link offers.
+
+You can find more functions and helper notebooks in Semantic Link Labs, a Python library that extends Semantic Link's capabilities to automate technical tasks.
+Sample code can be found here: https://github.com/microsoft/semantic-link-labs#featured-scenarios
+https://learn.microsoft.com/en-gb/fabric/data-science/semantic-link-overview
+
+
+I am not sure about this just read it in microsoft documentation
+
+I have another task I want to change the source of a report
+
+Report Name: Click Dashboard Fabric
+Current Semantic Model Name: Click Dashboard Fabric Semantic Model
+Target Semantic Model Name: sm_click_dashboard
+
+Can this be done too ?
+
+Development
+Database: 8dc6c20f-97c7-4a75-ad0e-ba1885e17983
+Development/Server: depokcwia5fu5o3nmsholbaq6q-tn25a2dteecephqarw3cneww6e.datawarehouse.fabric.microsoft.com
+
+
+Quality
+Database: 6d80f096-dadb-4b8d-8e6f-2c5450982822
+Server/Database: depokcwia5fu5o3nmsholbaq6q-ucweclgts6eubc6iqk2guz2xlu.datawarehouse.fabric.microsoft.com
+
+Production
+Database: 218d8ad7-a09e-4856-a6f0-5630a33a07f7
+Server: depokcwia5fu5o3nmsholbaq6q-nampkgxlbgluxb3ittfpbxno4i.datawarehouse.fabric.microsoft.com

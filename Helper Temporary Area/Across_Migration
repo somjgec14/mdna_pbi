@@ -1,0 +1,25 @@
+Migration steps:
+Create a new target Model and let it have no tables.
+Note dowon the workspace name target_model_name  and source model name.
+
+Important Notes:
+Prerequisites: Ensure you have appropriate permissions on both source and target workspaces.
+Target Model: The target semantic model should exist before running the migration. If it doesn't, create an empty one first.
+Lakehouse Connection: Make sure the target lakehouse exists and is accessible in the target workspace.
+Field Parameters: This step only applies if your source model has field parameters; otherwise, it will skip gracefully.
+
+Using MS Fabric notebook want to migrate a semantic model usign the below setps. Could you help me
+1. Install and verify the libraries required
+2. Copy the tables columnf from the source semantic model using: https://semantic-link-labs.readthedocs.io/en/stable/sempy_labs.migration.html#sempy_labs.migration.migrate_tables_columns_to_semantic_model
+3. Copy the Measures and relationships from the source semantic model using https://semantic-link-labs.readthedocs.io/en/stable/sempy_labs.migration.html#sempy_labs.migration.migrate_model_objects_to_semantic_model
+4. If field parameters are present then afte that use https://semantic-link-labs.readthedocs.io/en/stable/sempy_labs.migration.html#sempy_labs.migration.migrate_field_parameters
+5. Validate the model: https://semantic-link-labs.readthedocs.io/en/stable/sempy_labs.migration.html#sempy_labs.migration.migration_validation
+
+Example 
+source_workspace_name = "Across Fabric Data Engineering"
+source_model = "sm_across"
+target_model = "sm_across_migration_code"
+target_workspace = "ACROSS [Development]"
+target_Lakehouse = LH_Across
+target_Lakehouse_workspace = ACROSS [Development]
+
