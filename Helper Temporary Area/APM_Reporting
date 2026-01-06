@@ -1,0 +1,48 @@
+Aggregate Refine Control Cash Flow [Development]
+IDC - Internal Defect Cost [Production]
+
+
+Column '<oii>RACE_PRODUCT_TYPE</oii>' in Table '<oii>V_REP_OWIT_RACE_PROD_TYPE_VS_PDCL_DT02</oii>' contains a duplicate value 'HRA' and this is not allowed for columns on the one side of a many-to-one relationship or for columns that are used as the primary key of a table.
+Cluster URI:
+Activity ID:
+Request ID:
+Time:
+Details
+Column '<oii>RACE_PRODUCT_TYPE</oii>' in Table '<oii>V_REP_OWIT_RACE_PROD_TYPE_VS_PDCL_DT02</oii>' contains a duplicate value 'HRA' and this is not allowed for columns on the one side of a many-to-one relationship or for columns that are used as the primary key of a table.
+Cluster URI:
+Activity ID:
+Request ID:
+Time:
+Details
+
+Key Observations
+Significant reduction in impact minutes on main capacity, decreasing from 3,500 to 2,500 minutes.
+Root Causes
+
+iGPM & Across: Use of Analyze in Excel.
+Eolix: Refreshing large volumes of modeled data.
+
+Applications Affected
+iGPM, EOLIX, m.GMC.
+
+For the 20-Unit Capacity
+
+    Development team is re-modeling m.GMC’s data structure to improve efficiency.
+    Developers addressed issues in:
+       Aggregate Refine Control Cash Flow (Development).
+       IDC – Internal Defect Cost (Production).
+   Problems were resolved, preventing further disruptions.
+
+ Current Challenge
+
+   Overall CU utilization has increased, requiring additional measures:
+
+Recommendations (one after the other)
+For all mDNA Applciations
+1.  Increase mdna capacity02 from F64 to F128  
+    Estimated cost: \~4 TEUR/month.
+For Across: 
+1.  Create a separate capacity (mdnacapacity03) of F64 dedicated to Across.  
+    MS domain may bear 25–50% of the cost (\~4 TEUR/month).
+2.  Optimize Power BI reports for Across.  
+    Seek free MS consulting for optimization (may have limitations).

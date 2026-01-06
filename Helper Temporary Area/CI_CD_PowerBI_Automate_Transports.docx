@@ -3,9 +3,15 @@ Docuemnt the new transport process
 
 Draw out the process in Visio: 
 https://bosch-my.sharepoint.com/personal/goo6kor_bosch_com/Documents/Documents/Visio%20Files/mDNA%20PBI%20CI%20CD%20Automate.vsdx?web=1
+C:\Users\goo6kor\OneDrive - Bosch Group\Documents\Visio Files\mDNA PBI CI CD Automate.vsdx
 
 Task for Georgi:
 1. Custom Emails
 2. Automatically commit the latest changes from workspace to the Application branch then merge those changes to the prodcution branch so proper version
 https://learn.microsoft.com/en-us/fabric/cicd/git-integration/git-automation?tabs=user%2CADO#git-integration-api-functions
 3. Transport the 
+
+
+Task for Fabric/PBI IAC
+Changing the passwords automatically for Power BI Gateways and 
+

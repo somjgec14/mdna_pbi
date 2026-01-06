@@ -37,3 +37,26 @@ Folder Path Documents --> Power BI Developer's Garage --> Track_&_Release
 File Name: Track_&_Release using Access Token
 
 
+With Python via BOSCH Intranet this works with Portal/WAM Authentication.
+249 Records 
+
+30000
+API -- > 1000/2000 --> 30 
+--Pagination--startAt
+Next Steps
+Fetch all the mDNA Track and Release items 
+Columns
+issues.key"--> "Task ID", 
+"issues.fields.parent.key, "Parent Task ID"}, {"issues.fields.assignee.name", "Assignee NTID"}, {"issues.fields.duedate", "Due Date"}, {"issues.fields.creator.name", "Creator NTID"}, {"issues.fields.reporter.name", "Reporter Name NTID"}, {"issues.fields.reporter.displayName", "Reporter"}, {"issues.fields.description", "Business Benefit"}, {"issues.fields.summary", "Application"}, {"issues.fields.labels.0", "Labels 1"}, {"issues.fields.labels.1", "Labels 2"}, {"issues.fields.assignee.displayName", "Assignee"}, {"issues.fields.status.name", "Task Status"}, {"issues.fields.updated", "Last Updated Time"}, {"issues.fields.created", "Creation Date"}, {"issues.fields.customfield_46690", "Phaseout_Plan"}, {"issues.fields.issuetype.name", "Issue Type"}, {"issues.fields.labels.2", "Labels 3"}, {"issues.fields.resolutiondate", "Resolution Date"}, {"issues.fields.customfield_10380", "Work Done"}})
+in
+    #"Renamed Columns"
+
+
+Filter ID: 170737
+
+T&R Code: https://rb-tracker.bosch.com/tracker03/issues/?filter=170737
+
+Fetch all this data.
+
+Parallel We can create a ticket with Fabric Platform Team 
+we are

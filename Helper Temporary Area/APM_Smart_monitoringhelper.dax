@@ -1,2 +1,0 @@
-Refresh Schedule Time UTC = FORMAT(mard_mdna_t_pbi_sm_smart_monitoring[Time_Of_the_Day_UTC], "hh:mm")
-Time UTC = FORMAT(mard_mdna_t_pbi_sm_refresh_schedule_utc[Time_Of_the_Day_UTC], "hh:mm")
