@@ -1,0 +1,42 @@
+All columns: 
+root
+ |-- USER_NAME: string (nullable = true)
+ |-- PARSED_SCHEMA: string (nullable = true)
+ |-- SESSION_ID: integer (nullable = true)
+ |-- TIME_STAMP: timestamp (nullable = true)
+ |-- SQL_QUERY_ID: string (nullable = true)
+ |-- SQL_PREVIEW: string (nullable = true)
+ |-- SQL_TEXT_LENGTH: integer (nullable = true)
+ |-- SCHEMA_NAME: string (nullable = true)
+
+
+USing Pyspark in MS Fabric 
+- Get all the data from the staging table:LH_CD_Datamarts.mard_click_dashboard.staging_datamart_user_query_history
+- Delta load only the new records 
+- Primary key of the table is the combination of the following columns: 
+    |-- USER_NAME: string (nullable = true)
+    |-- PARSED_SCHEMA: string (nullable = true)
+    |-- SESSION_ID: integer (nullable = true)
+    |-- TIME_STAMP: timestamp (nullable = true)
+    |-- SQL_QUERY_ID: string (nullable = true)
+    Need to verify as well as this is an assumption. IF it is not true then delete the rows if two rows contain the same value for USER_NAME
+    PARSED_SCHEMA
+    SESSION_ID
+    TIME_STAMP
+    keeping the first row only for the columns to be the Primary key
+
+- While delta load have to check if it is the initial load if yes then have to create the table: 
+- Target Table name: LH_CD_Datamarts.mard_click_dashboard.t_datamart_user_query_history
+- After loading need stats on how many records got added, count of rows before delta load, count of rows after delta load.
+
+
+- Also need another stats
+- There is a column called SQL_TEXT_LENGTH of type numerical need to know out of the records how much percentage of it has value "1000"
+
+
+Now I need some stats about 
+USER_NAME and SCHEMA_NAME
+
+Like top 10 User_Name, Schema_Name
+
+Top Combination of User_Name SCHEMA_NAME
