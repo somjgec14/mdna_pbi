@@ -1,0 +1,50 @@
+Name	Type	Description
+gv$ACTIVE_SESSION_HISTORY	System View	Samples active database sessions every second, providing detailed historical performance data.
+all_users	Data Dictionary View	Lists all users that are known to the database.
+gv$sqlarea	System View	Contains statistics on shared SQL areas and the actual text of the SQL statements.
+
+
+Problem STATEMENT
+
+I am working as a data analyst and I have the following task: Our project has lot of tables in ORACLE Database which are group into various datamarts
+we want to find out how users use these datamarts.
+
+Definition of Datamarts: 
+Example my user goo6kor is executing the STATEMENT
+Select * from mard_promaco.mv_trn_promaco_cmm_pva_cost;
+
+Now the datamart from the statement is: mard_promaco
+
+Example 2: 
+SELECT
+    d1.entry_object
+FROM
+    mard_FSP.mv_rep_rmi_product_weight d1
+INNER JOIN mard_promaco.mv_trn_promaco_bom_explosion d2 ON d1.entry_object = d2.entry_object;
+
+Datamarts name here is mard_proamco and mard_FSP so two entries for the same user
+
+So now the output of my query will have the follwoing columns
+QueryID: ID of the Query
+TIMESTAMP: Execution timestamp of the query
+USER_ID: UserID of who executed the command
+Datamart: to be found out as shown through the examples
+Statement Length: SQL Query Length
+Statement_Sample: First 500 chars of the query
+
+
+So I need an Oracle SQL Query which can generate me the above columns
+And I do not need to focus on all the schema in my org. For getting staretd I would first like to find
+mard_proamco and mard_fsp then later on I can make it dynamic
+
+Problem Statemet Advanced
+It seems to work for queries under 1000 chars and I want to make now the datamarts dynamic
+
+Now the required datamarts can be found using this query: 
+SELECT
+    'MARD_' || SOL_PROD_TOKEN AS MARD_FILTER
+FROM
+    mard_mdna.v_all_solutions_mdna
+order by MARD_FILTER;
+
+Now incorporate these two

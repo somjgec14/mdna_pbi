@@ -88,3 +88,8 @@ SELECT
 FROM
     mard_mdna.v_all_solutions_mdna
 order by MARD_FILTER;
+
+select sql_id,sql_text,length(sql_text) len_sql ,sql_fulltext,length(sql_fulltext) len_sql_full,REGEXP_SUBSTR(
+      LOWER(sql_fulltext),
+      '(from|join)\s+("?[a-z0-9_$#]+"?\.)("?[a-z0-9_$#]+"?)') from gv$sqlarea where length(sql_fulltext)>1000;
+ 

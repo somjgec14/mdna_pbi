@@ -60,3 +60,60 @@ LEFT JOIN (
 ) v_sql ON v_sql.sql_id = v_hist.sql_id
 WHERE v_sql.sql_text IS NOT NULL
 ORDER BY v_hist.max_sample_time DESC;
+
+
+QUERYID: String
+TIMESTAMP: TimeStamp
+USER_ID: String
+DATAMART: String
+STATEMENT_LENGTH: Integer
+STATEMENT_SAMPLE: String
+EXECUTION_COUNT: Integer
+PARSING_SCHEMA: String
+
+
+I have a table in MS Fabric: 
+Table Name: LH_CD_Datamarts.mard_click_dashboard.t_staging_datamart_users_claude
+I want to analyze this table and then clean and store the data in a new table via MS Fabric PySpark Notebook
+New Table name:LH_CD_Datamarts.mard_click_dashboard.t_datamart_user_metrics
+Table names can change so make them as variables
+
+Table Column Details: 
+ |-- QUERYID: string (nullable = true)
+ |-- TIMESTAMP: string (nullable = true)
+ |-- USER_ID: string (nullable = true)
+ |-- DATAMART: string (nullable = true)
+ |-- STATEMENT_LENGTH: decimal(38,0) (nullable = true)
+ |-- STATEMENT_SAMPLE: string (nullable = true)
+ |-- EXECUTION_COUNT: decimal(38,0) (nullable = true)
+ |-- PARSING_SCHEMA: string (nullable = true)
+
+ The Primary key will be of the following columns: 
+ TIMESTAMP, QUERYID, USER_ID, DATAMART
+
+ I want first analyse that how many duplicates are there based on this combination.
+ Load the data in a dataframe
+ I want some stats that is percentage of duplicates total records etc
+ Also it would be best while moving the data STATEMENT_LENGTH and EXECUTION_COUNT columns can be convereted to integers
+ And then transfer the fresh data without duplicates in the new table. IF they are duplicates based on the above columns only take the first insatnce
+ Ensure in the new dataframe TIMESTAMP, QUERYID, USER_ID, DATAMART these columns form the primary key
+Now after cleaning the data need to do load incremental load 
+ IF the table does not exist identify as initial load and then load the cleaned data
+ else based on the primary keys TIMESTAMP, QUERYID, USER_ID, DATAMART only load the required data which does not exist in the target table
+ and also stats about the table like now of rows and column data types.
+ No of rows loaded, No of rows before loading, no of rows after loading
+
+
+Now I want to do some analysis with the table using Pyspark generate me tables and charts
+- Top 10 Datamarts used by User ID
+- How many statements are there where STATEMENT_LENGTH is more than equal to 1000
+- TOP 10 USER_ID + Datamarts COMBINATIONS along with SQL Statment count 
+And other useful stats from these columns and the keyfigure will be count of Query_Ids
+
+- 
+ |-- QUERYID: string (nullable = true)
+ |-- TIMESTAMP: string (nullable = true)
+ |-- USER_ID: string (nullable = true)
+ |-- DATAMART: string (nullable = true)
+ |-- STATEMENT_LENGTH: integer (nullable = true)
+ |-- STATEMENT_SAMPLE: string (nullable = true)
