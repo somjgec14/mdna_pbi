@@ -1,0 +1,19 @@
+Problem Statement 
+
+PO and users are complaining that Across Application is too slow.
+
+Reason: 
+- Across is in the same capacity as IGPM MCR Application and they share the same resources. Mostly iGPM utilizes most of the resources
+- Across is a big application so it cannot be on boarded in the samller capacity as it will affect the other 29 applications in the smaller capacity
+
+
+Solution
+
+- Create a seperate capacity for Across with same configuration as the smaller one
+- Increase the capacity of the smaller capacity and then on board across in that capacity
+
+Cost information
+ - In both solutions the cost of increasing is same 
+
+ What is the status of MCr Master Data from MCR Data Complateness dashboard
+ Current MCR Data Timestamp of 

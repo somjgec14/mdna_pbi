@@ -1,0 +1,26 @@
+I want to do some automation in my Azure Subscription where I am the owner
+
+
+Key vault URL: https://kv-pbi-technical-users.vault.azure.net/
+Subscription ID: ef6b3420-ecbc-474f-b106-474a6eed0aee
+Subscription Name: BD-BTM-IC-BBMREDLake-Prod
+Keyvault Name: KV-PBI-Technical-Users
+
+I want to update my azure key vault secret using the below table/information
+
+Database	Username	New Password	Expiry Date	Azure Key Secret Name	Message
+ZeusP	TEC_IFR_EXT_BBMREPINT	L8591U8G7_R816c	28-Jun-2026	PBI-ZEUS-P	SUCCESS
+ZeusQ	TEC_IFR_EXT_BBMREPINT	I241X1GMT_7wcp9	28-Jun-2026	PBI-ZEUS-Q	SUCCESS
+ZeusD	TEC_IFR_EXT_BBMREPINT	JTM7_C3v4cvb3oa	28-Jun-2026	PBI-ZEUS-D	SUCCESS
+ZeusP	TEC_IFR_EXT_ECMF_PBI_CLOUD	JKJCS63NZQ_7d8h	28-Jun-2026	PBI-ECMF-Zeus-P	SUCCESS
+ZeusQ	TEC_IFR_EXT_ECMF_PBI_CLOUD	V7DJPISW530_0gu	28-Jun-2026	PBI-ECMF-Zeus-Q	SUCCESS
+ZeusD	TEC_IFR_EXT_ECMF_PBI_CLOUD	BKT_Udab6d6swki	28-Jun-2026	PBI-ECMF-Zeus-D	SUCCESS
+ZeusP	TEC_IFR_EXT_PLCM_BBM_PBI	UG74R3R_Avbjizi	28-Jun-2026	PBI-PLCM-Zeus-P	SUCCESS
+ZeusQ	TEC_IFR_EXT_PLCM_BBM_PBI	TXB_O2rj0e10za4	28-Jun-2026	PBI-PLCM-Zeus-Q	SUCCESS
+ZeusD	TEC_IFR_EXT_PLCM_BBM_PBI	XKCC7_S375zc4ct	28-Jun-2026	PBI-PLCM-Zeus-D	SUCCESS
+
+The Azure Secret Name gives the secret name where the new version of the secret needs to be updated
+The new Password column is the new secret version 
+The username will be the "Type" for the secret.
+
+I want to automate this process. So what will be the right way? . Everytime I change the password I will have the same columns and data inside it will change
